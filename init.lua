@@ -152,14 +152,15 @@ require('lazy').setup({
     },
   },
 
-  {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'onedark'
-    end,
-  },
+
+  -- {
+  --   -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
 
   {
     -- Set lualine as statusline
@@ -186,6 +187,8 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
+
+    'catppuccin/nvim',
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -232,7 +235,28 @@ require('lazy').setup({
   -- { import = 'custom.plugins' },
 }, {})
 
--- [[ Setting options ]]
+require("catppuccin").setup {
+    color_overrides = {
+      mocha = {
+        text = "#F4CDE9",
+        subtext1 = "#DEBAD4",
+        subtext0 = "#C8A6BE",
+        overlay2 = "#B293A8",
+        overlay1 = "#9C7F92",
+        overlay0 = "#866C7D",
+        surface2 = "#705867",
+        surface1 = "#5A4551",
+        surface0 = "#44313B",
+
+        base = "#352939",
+        mantle = "#211924",
+        crust = "#1a1016",
+      },
+    },
+    compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
+}
+
+--[[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
@@ -306,8 +330,7 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
+        ['<C-u>'] = false, ['<C-d>'] = false,
       },
     },
   },
@@ -606,3 +629,4 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+vim.cmd.colorscheme "catppuccin"
