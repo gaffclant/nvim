@@ -1,9 +1,8 @@
 --[[
-
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
-
+sdfsdafasdfasdfasdf
 Kickstart.nvim is *not* a distribution.
 
 Kickstart.nvim is a template for your own configuration.
@@ -188,7 +187,31 @@ require('lazy').setup({
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
-    'catppuccin/nvim',
+    {'catppuccin/nvim',
+        config = function ()
+            require("catppuccin").setup {
+                color_overrides = {
+                  mocha = {
+                    text = "#F4CDE9",
+                    subtext1 = "#DEBAD4",
+                    subtext0 = "#C8A6BE",
+                    overlay2 = "#B293A8",
+                    overlay1 = "#9C7F92",
+                    overlay0 = "#866C7D",
+                    surface2 = "#705867",
+                    surface1 = "#5A4551",
+                    surface0 = "#44313B",
+
+                    base = "#352939",
+                    mantle = "#211924",
+                    crust = "#1a1016",
+                  },
+                },
+                compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
+            }
+            vim.cmd.colorscheme "catppuccin"
+        end,
+    },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -232,29 +255,9 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {})
 
-require("catppuccin").setup {
-    color_overrides = {
-      mocha = {
-        text = "#F4CDE9",
-        subtext1 = "#DEBAD4",
-        subtext0 = "#C8A6BE",
-        overlay2 = "#B293A8",
-        overlay1 = "#9C7F92",
-        overlay0 = "#866C7D",
-        surface2 = "#705867",
-        surface1 = "#5A4551",
-        surface0 = "#44313B",
-
-        base = "#352939",
-        mantle = "#211924",
-        crust = "#1a1016",
-      },
-    },
-    compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
-}
 
 --[[ Setting options ]]
 -- See `:help vim.o`
@@ -310,7 +313,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>t', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- [[ Highlight on yank ]]
@@ -335,6 +338,9 @@ require('telescope').setup {
     },
   },
 }
+
+-- Configure Neotree
+
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -493,7 +499,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('<leader>K', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -628,5 +634,4 @@ cmp.setup {
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
-vim.cmd.colorscheme "catppuccin"
+-- vim: ts=4 sts=4 sw=4  et
