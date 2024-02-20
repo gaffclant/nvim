@@ -1,8 +1,4 @@
 return {
-  "Pocco81/auto-save.nvim",
-  config = function ()
-    require("auto-save").setup({
-      -- empty
-    })
-  end
+  -- "Pocco81/auto-save.nvim",
+  -- require("auto-save").setup({})
 }
