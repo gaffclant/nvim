@@ -43,6 +43,7 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.cmd('set ts=4 sts=4 sw=4 et')
+vim.cmd('set relativenumber')
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -308,6 +309,7 @@ vim.o.termguicolors = true
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ 'v' }, '<leader>s', 'xi()<escape>P')
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
