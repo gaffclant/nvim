@@ -1,3 +1,4 @@
 return {
-  'neoclide/coc.nvim',
+  -- 'neoclide/coc.nvim',
+  "nvim-neotest/nvim-nio",
 }

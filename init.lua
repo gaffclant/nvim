@@ -2,7 +2,6 @@
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
-sdfsdafasdfasdfasdf
 Kickstart.nvim is *not* a distribution.
 
 Kickstart.nvim is a template for your own configuration.
@@ -113,6 +112,7 @@ require('lazy').setup({
     },
 
     -- Useful plugin to show you pending keybinds.
+    { "echasnovski/mini.icons" },
     { 'folke/which-key.nvim',  opts = {} },
     {
         -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -164,19 +164,6 @@ require('lazy').setup({
     --   end,
     -- },
 
-    {
-        -- Set lualine as statusline
-        'nvim-lualine/lualine.nvim',
-        -- See `:help lualine.txt`
-        opts = {
-            options = {
-                icons_enabled = false,
-                theme = 'onedark',
-                component_separators = '|',
-                section_separators = '',
-            },
-        },
-    },
 
     {
         -- Add indentation guides even on blank lines
@@ -237,6 +224,8 @@ require('lazy').setup({
             },
         },
     },
+
+    { "hrsh7th/cmp-calc" },
 
     {
         -- Highlight, edit, and navigate code
@@ -412,7 +401,20 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
     require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+        ensure_installed = { 'c',
+            'cpp',
+            'go',
+            'lua',
+            'python',
+            'rust',
+            'tsx',
+            'javascript',
+            'typescript',
+            'vimdoc',
+            'vim',
+            'bash',
+            'zig',
+        },
 
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
         auto_install = false,
@@ -521,15 +523,25 @@ local on_attach = function(_, bufnr)
 end
 
 -- document existing key chains
-require('which-key').register {
-    ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-    ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-    ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-    ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
-    ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-    ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-    ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-}
+
+require("which-key").add({
+    { "<leader>c",  group = "[C]ode" },
+    { "<leader>c_", hidden = true },
+    { "<leader>d",  group = "[D]ocument" },
+    { "<leader>d_", hidden = true },
+    { "<leader>g",  group = "[G]it" },
+    { "<leader>g_", hidden = true },
+    { "<leader>h",  group = "More git" },
+    { "<leader>h_", hidden = true },
+    { "<leader>r",  group = "[R]ename" },
+    { "<leader>r_", hidden = true },
+    { "<leader>s",  group = "[S]earch" },
+    { "<leader>s_", hidden = true },
+    { "<leader>w",  group = "[W]orkspace" },
+    { "<leader>w_", hidden = true },
+})
+
+
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
@@ -545,7 +557,7 @@ require('mason-lspconfig').setup()
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-    -- clangd = {},
+    clangd = {},
     -- gopls = {},
     -- pyright = {},
     -- rust_analyzer = {},
@@ -564,6 +576,7 @@ local servers = {
 
 -- Setup neovim lua configuration
 require('neodev').setup()
+require "alpha-config"
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -635,8 +648,12 @@ cmp.setup {
     sources = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
+        { name = "calc" },
     },
 }
+
+package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
+package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim:set ts=4 sts=4 sw=4  et
